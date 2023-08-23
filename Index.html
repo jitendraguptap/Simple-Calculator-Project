@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .calculator {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .output {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .button {
+            display: inline-block;
+            width: 60px;
+            height: 40px;
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="output" id="output">0</div>
+        <div>
+            <button class="button" onclick="appendToOutput('7')">7</button>
+            <button class="button" onclick="appendToOutput('8')">8</button>
+            <button class="button" onclick="appendToOutput('9')">9</button>
+            <button class="button" onclick="performOperation('+')">+</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToOutput('4')">4</button>
+            <button class="button" onclick="appendToOutput('5')">5</button>
+            <button class="button" onclick="appendToOutput('6')">6</button>
+            <button class="button" onclick="performOperation('-')">-</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToOutput('1')">1</button>
+            <button class="button" onclick="appendToOutput('2')">2</button>
+            <button class="button" onclick="appendToOutput('3')">3</button>
+            <button class="button" onclick="performOperation('*')">*</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToOutput('0')">0</button>
+            <button class="button" onclick="appendToOutput('.')">.</button>
+            <button class="button" onclick="performOperation('/')">/</button>
+            <button class="button" onclick="performOperation('%')">%</button>
+        </div>
+        <div>
+            <button class="button" onclick="calculateSquare()">x^2</button>
+            <button class="button" onclick="clearOutput()">AC</button>
+            <button class="button" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        var outputElement = document.getElementById("output");
+        var currentInput = "0";
+        var currentOperator = "";
+        var previousValue = 0;
+
+        function appendToOutput(value) {
+            if (currentInput === "0") {
+                currentInput = value;
+            } else {
+                currentInput += value;
+            }
+            outputElement.textContent = currentInput;
+        }
+
+        function performOperation(operator) {
+            previousValue = parseFloat(currentInput);
+            currentInput = "0";
+            currentOperator = operator;
+        }
+
+        function calculateResult() {
+            var currentValue = parseFloat(currentInput);
+            switch (currentOperator) {
+                case "+":
+                    currentInput = (previousValue + currentValue).toString();
+                    break;
+                case "-":
+                    currentInput = (previousValue - currentValue).toString();
+                    break;
+                case "*":
+                    currentInput = (previousValue * currentValue).toString();
+                    break;
+                case "/":
+                    currentInput = (previousValue / currentValue).toString();
+                    break;
+                case "%":
+                    currentInput = (previousValue % currentValue).toString();
+                    break;
+            }
+            outputElement.textContent = currentInput;
+            currentOperator = "";
+        }
+
+        function calculateSquare() {
+            currentInput = (parseFloat(currentInput) ** 2).toString();
+            outputElement.textContent = currentInput;
+        }
+
+        function clearOutput() {
+            currentInput = "0";
+            currentOperator = "";
+            outputElement.textContent = currentInput;
+        }
+    </script>
+</body>
+</html>
